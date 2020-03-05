@@ -1,7 +1,7 @@
 [package]
 name = "m68k_reloaded_parser"
 version = "0.1.0"
-authors = ["Marcel Garus <marcel.garus@gmail.com>"]
+authors = ["Marcel Garus <marcel.garus@gmail.com>", "Jonas Wanke <contact@jonas-wanke.com>"]
 edition = "2018"
 
 [lib]

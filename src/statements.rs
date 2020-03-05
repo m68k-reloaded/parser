@@ -1,4 +1,5 @@
 use m68k_reloaded_common::Range;
+use std::ops::Deref;
 
 /// A statement in the abstract syntax tree built by the parser. Wraps a value
 /// like [Size] or [EffectiveAddress] and adds information where to find the
@@ -8,6 +9,13 @@ use m68k_reloaded_common::Range;
 pub struct Stmt<T> {
     pub range: Range,
     pub value: T,
+}
+impl<T> Deref for Stmt<T> {
+    type Target = T;
+
+    fn deref(&self) -> &Self::Target {
+        &self.value
+    }
 }
 
 pub type Byte = u8;
