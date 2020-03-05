@@ -1,55 +1,57 @@
-struct Statement<T> {
-    range: Range,
-    value: T,
+use m68k_reloaded_common::Range;
+
+pub struct Stmt<T> {
+    pub range: Range,
+    pub value: T,
 }
 
-type Byte = u8;
-type Word = u16;
-type LongWord = u32;
+pub type Byte = u8;
+pub type Word = u16;
+pub type LongWord = u32;
 
-type RegisterIndex = Byte;
+pub type RegisterIndex = Byte;
 
-struct An {
-    index: RegisterIndex,
+pub struct An {
+    pub index: RegisterIndex,
 }
 
-struct Dn {
-    index: RegisterIndex,
+pub struct Dn {
+    pub index: RegisterIndex,
 }
 
-enum Xn {
-    An(Statement<An>),
-    Dn(Statement<Dn>),
+pub enum Xn {
+    An(Stmt<An>),
+    Dn(Stmt<Dn>),
 }
 
-enum EffectiveAddress {
-    Dn(Statement<Dn>),
-    An(Statement<An>),
-    AnInd(Statement<An>),
-    AnIndWithPostInc(Statement<An>),
-    AnIndWithPreDec(Statement<An>),
-    AnIndWithDisplacement(Statement<Word>, Statement<An>),
-    AnIndWithIndex(Statement<Byte>, Statement<An>, Statement<Xn>),
-    AbsoluteWord(Statement<Word>),
-    AbsoluteLongWord(Statement<LongWord>),
-    PcIndWithDisplacement(Statement<Word>),
-    PcIndWithIndex(Statement<Byte>, Statement<Xn>),
+pub enum EffectiveAddress {
+    Dn(Stmt<Dn>),
+    An(Stmt<An>),
+    AnInd(Stmt<An>),
+    AnIndWithPostInc(Stmt<An>),
+    AnIndWithPreDec(Stmt<An>),
+    AnIndWithDisplacement(Stmt<Word>, Stmt<An>),
+    AnIndWithIndex(Stmt<Byte>, Stmt<An>, Stmt<Xn>),
+    AbsoluteWord(Stmt<Word>),
+    AbsoluteLongWord(Stmt<LongWord>),
+    PcIndWithDisplacement(Stmt<Word>),
+    PcIndWithIndex(Stmt<Byte>, Stmt<Xn>),
 }
 
-impl std::string::ToString for Register {
-    fn to_string(&self) -> String {
-        match self {
-            Register::PC => String::from("PC"),
-            Register::SP => String::from("SP"),
-            Register::An(n) => format!("A{}", n),
-            Register::Dn(n) => format!("D{}", n),
-        }
-    }
-}
+// impl std::string::ToString for Register {
+//     fn to_string(&self) -> String {
+//         match self {
+//             Register::PC => String::from("PC"),
+//             Register::SP => String::from("SP"),
+//             Register::An(n) => format!("A{}", n),
+//             Register::Dn(n) => format!("D{}", n),
+//         }
+//     }
+// }
 
-type Operand = EffectiveAddress;
+pub type Operand = EffectiveAddress;
 
-enum OperationType {
+pub enum OperationType {
     Add,
     Adda,
     Addi,
@@ -57,20 +59,26 @@ enum OperationType {
     Addx, // ...
 }
 
-enum Size {
+pub enum Size {
     Byte,
     Word,
     LongWord,
 }
 
-struct Operation {
-    type: Statement<OperationType>,
-    size: Statement<Size>,
-    operands: Vec<Statement<Operand>>,
+pub struct Operation {
+    pub operation_type: Stmt<OperationType>,
+    pub size: Stmt<Size>,
+    pub operands: Vec<Stmt<Operand>>,
 }
 
-type Comment = String;
+pub type Comment = String;
 
-type Label = String;
+pub type Label = String;
 
-type Program = Vec<Statement>;
+pub enum Statement {
+    Label(Label),
+    Operation(Operation),
+    Comment(Comment),
+}
+
+pub type Program = Vec<Statement>;
