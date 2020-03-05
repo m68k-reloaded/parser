@@ -1,5 +1,10 @@
 use m68k_reloaded_common::Range;
 
+/// A statement in the abstract syntax tree built by the parser. Wraps a value
+/// like [Size] or [EffectiveAddress] and adds information where to find the
+/// corresponding code in the source file.
+/// Not to be confused with [Statement], which represents (about) a single line
+/// of assembly code.
 pub struct Stmt<T> {
     pub range: Range,
     pub value: T,
@@ -19,6 +24,8 @@ pub struct Dn {
     pub index: RegisterIndex,
 }
 
+/// Wrapper around [An] and [Dn]. Should only be used in contexts where [An]
+/// and [Dn] are the only options.
 pub enum Xn {
     An(Stmt<An>),
     Dn(Stmt<Dn>),
@@ -75,6 +82,7 @@ pub type Comment = String;
 
 pub type Label = String;
 
+/// About a single line in the assembler program.
 pub enum Statement {
     Label(Label),
     Operation(Operation),
