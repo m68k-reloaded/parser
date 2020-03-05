@@ -8,10 +8,6 @@ edition = "2018"
 name = "m68k_reloaded_parser"
 path = "src/lib.rs"
 
-[[bin]]
-name = "parser"
-path = "src/main.rs"
-
 [dependencies]
 m68k_reloaded_common = { path = "../common" }
 m68k_reloaded_scanner = { path = "../scanner" }
