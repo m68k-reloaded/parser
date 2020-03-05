@@ -81,4 +81,4 @@ pub enum Statement {
     Comment(Comment),
 }
 
-pub type Program = Vec<Statement>;
+pub type Program = Vec<Stmt<Statement>>;
